@@ -21,7 +21,10 @@ MongoClient.connect('mongodb+srv://lindy:blueman1a@cluster0.uexxx.mongodb.net/my
       // Middlewares
     // ========================
     app.use(bodyParser.urlencoded({ extended: true }))
+    app.use(bodyParser.json())
     app.set('view engine', 'ejs')
+    app.use(express.static('public'))
+    
 
     
 
@@ -32,7 +35,7 @@ MongoClient.connect('mongodb+srv://lindy:blueman1a@cluster0.uexxx.mongodb.net/my
     app.get('/', (req, res) => {
       db.collection('quotes').find().toArray()
         .then(quotes => {
-          res.render('index.ejs', { quotes: results })
+          res.render('index.ejs', { quotes: quotes })
         })
         .catch()
     })
@@ -43,6 +46,23 @@ MongoClient.connect('mongodb+srv://lindy:blueman1a@cluster0.uexxx.mongodb.net/my
           res.redirect('/')
       })
       .catch()
+    })
+
+    app.put('/quotes', (req, res) => {
+      quotesCollection.findOneAndUpdate(
+        { name: 'Yoda' },
+        {
+          $set: {
+            name: req.body.name,
+            quote: req.body.quote
+          }
+        },
+        {
+          upsert: true
+        }
+      )
+        .then(result => res.json('Success'))
+        .catch(error => console.error(error))
     })
   }) 
   .catch(console.error)

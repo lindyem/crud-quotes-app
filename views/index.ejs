@@ -11,6 +11,15 @@
     <input type="text" placeholder="quote" name="quote">
     <button type="submit">Submit</button>
   </form>
+
+  <div>
+    <h2>Invades!</h2>
+    <p>
+      Replace first quote with a new one!
+    </p>
+    <button id="update-button">Replace Quote</button>
+  </div>
+
   <h2>Quotes</h2>
   <ul class="quotes">
       <% for(var i = 0; i < quotes.length; i++) {%>
@@ -21,5 +30,6 @@
     <% } %>
   </ul>
 
+    <script src="/main.js"></script>
 </body>
 </html>
