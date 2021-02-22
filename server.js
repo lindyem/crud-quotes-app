@@ -5,6 +5,6 @@ app.listen(3000, function () {
   console.log('listening on 3000')
 })
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   res.send('Hello World')
 })
