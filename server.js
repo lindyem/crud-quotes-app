@@ -50,7 +50,7 @@ MongoClient.connect('mongodb+srv://lindy:blueman1a@cluster0.uexxx.mongodb.net/my
 
     app.put('/quotes', (req, res) => {
       quotesCollection.findOneAndUpdate(
-        { name: 'Yoda' },
+        { name: 'Replacement' },
         {
           $set: {
             name: req.body.name,
@@ -64,6 +64,20 @@ MongoClient.connect('mongodb+srv://lindy:blueman1a@cluster0.uexxx.mongodb.net/my
         .then(result => res.json('Success'))
         .catch(error => console.error(error))
     })
+
+    app.delete('/quotes', (req, res) => {
+      quotesCollection.deleteOne(
+        { name: req.body.name },
+      )
+        .then(result => {
+          if (result.deletedCount === 0) {
+            return res.json('No quote to delete')
+          }
+          res.json('Deleted Quote!')
+        })
+      .catch(error => console.error(error))
+    })
+
   }) 
   .catch(console.error)
 
